@@ -1,0 +1,32 @@
+[project]
+name = "llm-eval-harness-backend"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "sqlalchemy>=2",
+    "alembic",
+    "psycopg[binary]",
+    "python-multipart",
+    "pydantic-settings",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["B008"]  # FastAPI Depends/File defaults
+
+[tool.ruff.lint.per-file-ignores]
+"alembic/versions/*" = ["E501"]
