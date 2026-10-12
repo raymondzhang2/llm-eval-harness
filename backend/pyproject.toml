@@ -11,16 +11,18 @@ dependencies = [
     "pydantic-settings",
     "scikit-learn",
     "scipy",
+    "anthropic",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "httpx", "ruff"]
+dev = ["pytest", "pytest-asyncio", "httpx", "ruff"]
 
 [tool.setuptools.packages.find]
 include = ["app*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+asyncio_mode = "auto"
 
 [tool.ruff]
 line-length = 100
