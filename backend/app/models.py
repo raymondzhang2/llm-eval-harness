@@ -71,6 +71,7 @@ class Judgment(Base):
     score: Mapped[int | None] = mapped_column(Integer)  # null if the judgment failed
     rationale: Mapped[str | None] = mapped_column(Text)
     raw_response: Mapped[str | None] = mapped_column(Text)
+    error: Mapped[str | None] = mapped_column(Text)  # why a failed judgment failed
     latency_ms: Mapped[int | None] = mapped_column(Integer)
     tokens: Mapped[int | None] = mapped_column(Integer)
 

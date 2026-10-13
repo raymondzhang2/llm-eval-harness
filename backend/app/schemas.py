@@ -48,3 +48,53 @@ class RubricOut(BaseModel):
     name: str
     criteria: list[Criterion]
     created_at: datetime
+
+
+class RunCreate(BaseModel):
+    dataset_id: int
+    rubric_id: int
+    judge_model: str | None = None  # defaults to the server's configured judge model
+
+
+class RunOut(BaseModel):
+    id: int
+    dataset_id: int
+    rubric_id: int
+    judge_model: str
+    prompt_version: str
+    status: str  # queued, running, done, failed
+    total_tokens: int
+    created_at: datetime
+    judgments_done: int
+    judgments_total: int  # items x criteria
+
+
+class ReviewOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    human_score: int
+    note: str | None
+    created_at: datetime
+
+
+class JudgmentOut(BaseModel):
+    id: int
+    run_id: int
+    item_id: int
+    criterion: str
+    score: int | None  # null when the judgment failed
+    rationale: str | None
+    error: str | None
+    latency_ms: int | None
+    tokens: int | None
+    input: str
+    output: str
+    reference: str | None
+    review: ReviewOut | None
+
+
+class JudgmentPage(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    items: list[JudgmentOut]
